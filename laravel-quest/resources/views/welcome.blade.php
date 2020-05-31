@@ -70,23 +70,30 @@
         
         @section('content')
         
-        <div class="center jumbotron bg-warning">
-            <div class="text-center text-white">
-                <h1>Youtubeまとめ x SNS</h1>
-            </div> 
-        </div>
-        
-        <div class="text-right">
+            <div class="jumbotron bg-warning">
+                <div class="text-center text-white">
+                    <h1>YouTubeまとめ × SNS</h1>
+                </div>
+            </div>
+            
             @if (Auth::check())
-                {{ Auth::user()->name }}
+                <div class="text-right">
+                    {{ 'ユーザー名: ' . Auth::user()->name }}
+                </div>
             @endif
-        </div>
-        
-        
-        @include('users.users', ['users'=>$users])
-        
-        @endsection('content')
-        
-        
+                
+            <!--@if (session('flash_message'))-->
+            <!--    <div class="flash_message">-->
+            <!--        {{ session('flash_message') }}-->
+            <!--    </div>-->
+            <!--@endif-->
+            
+            @include('commons.flash_message')
+            
+            @include('commons.message')
+            
+            @include('users.movies', ['users'=>$users] )
+            
+        @endsection
     </body>
 </html>

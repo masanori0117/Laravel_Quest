@@ -27,8 +27,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-
+    //protected $redirectTo = '/';
+    protected function redirectTo() {
+        session()->flash('flash_message', '新規登録が完了しました。');
+        return '/';
+    }
     /**
      * Create a new controller instance.
      *
@@ -47,11 +50,34 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users',
+        $validate_rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+            ];
+        
+        $validate_messages = [
+            'name.required' => '名前を入力してください',
+            'name.string' => '名前は文字列で入力してください',
+            'name.max' => '名前は255文字以内で入力してください',
+            'email.required' => 'メールアドレスを入力してください',
+            'email.string' => 'メールアドレスは文字列で入力してください',
+            'email.max' => 'メールアドレスは255文字以内で入力してください',
+            'email.unique' => 'そのメールアドレスはすでに登録されています',
+            'password.required' => 'パスワードを入力してください',
+            'password.string' => 'パスワードは文字列で入力してください',
+            'password.max' => 'パスワードは6文字以上で入力してください',
+            'password.confirmed' => 'パスワードを正確に入力してください',
+            ];
+        
+        return Validator::make($data, $validate_rules, $validate_messages);
+        
+        
+        // return Validator::make($data, [
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:6|confirmed',
+        // ]);
     }
 
     /**

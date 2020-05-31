@@ -9,11 +9,11 @@ class Movie extends Model
     protected $fillable = [
         'user_id',
         'url',
-        'comment'
-        ];
-        
+        'comment'];
+    
     public function user() {
         
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
+    
 }

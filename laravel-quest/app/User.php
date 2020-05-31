@@ -27,23 +27,24 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-   public function movies()
-    {
+    public function movies() {
+        
         return $this->hasMany(Movie::class);
     }
     
-    public function followings()
-    {
+    public function followings() {
+        
         return $this->belongsToMany(User::class, 'user_follow', 'user_id', 'follow_id')->withTimestamps();
-    }
 
-    public function followers()
-    {
+    }
+    
+    public function followers() {
+        
         return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
     }
-
-    public function is_following($userId)
-    {
+    
+    public function is_following ($userId) {
+        
         return $this->followings()->where('follow_id', $userId)->exists();
     }
     
@@ -72,5 +73,6 @@ class User extends Authenticatable
             $this->followings()->detach($userId);
         }
     }
+    
     
 }
